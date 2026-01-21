@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div>
+        <h1>Patient Management</h1>
+        <P>A webapp to digitalize the patient records and perfom CRUD operations along with a visual interface</P>
+
+        <div id="options">
+            <button id="btn-display">View all patiends</button>
+            <button id="btn-single">Search a patient by PID</button>
+            <button id="btn-create">Create a new patient Record</button>
+            <button id="btn-edit">Edit an existing Patient</button>
+            <button id="btn-delete">Delete a patient from DB</button> 
+        </div> 
+
+        
+        <div id="display-single">
+            <h2>Search Patient by ID</h2>
+            <form>
+                <div class="form-row">
+                    <label for="single-pid">Enter the PID:</label>
+                    <input id="single-pid" type="text" required>
+                </div>
+                <button type="submit" id="sdis-btn">Submit</button>
+            </form>
+        </div>
+
+        <div id="single-del">
+            <h2>Delete Patient</h2>
+            <form>
+                <div class="form-row">
+                    <label for="del-pid">Enter the PID:</label>
+                    <input id="del-pid" type="text" required>
+                </div>
+                <button type="submit" id="sdel-btn">Submit</button>
+            </form>
+        </div>
+
+        <div id="display"></div>
+        
+        <form id="createpatient">
+            <h2>Create New Patient</h2>
+            <div class="form-row">
+                <label for="pid">Patient ID</label>
+                <input type="text" id="pid" required>
+            </div>
+            <div class="form-row">
+                <label for="pname">Patient Name</label>
+                <input type="text" id="pname" required>
+            </div>
+            <div class="form-row">
+                <label for="pgen">Gender</label>
+                <input id="pgen" type="text" required>
+            </div>
+            <div class="form-row">
+                <label for="pcity">City</label>
+                <input type="text" id="pcity" required>
+            </div>
+            <div class="form-row">
+                <label for="page">Patient Age</label>
+                <input id="page" type="text" required>
+            </div>
+            <div class="form-row">
+                <label for="pweight">Weight</label>
+                <input id="pweight" type="text" required>
+            </div>
+            <div class="form-row">
+                <label for="pheight">Height</label>
+                <input id="pheight" type="text" required>
+            </div>
+            <button type="submit" id="new-sub">Submit</button>
+        </form>
+        <form id="editpatient">
+            <h2>Edit Existing Patient</h2>
+            <div class="form-row">
+                <label for="epid">Patient ID</label>
+                <input type="text" id="epid" required>
+            </div>
+            <div class="form-row">
+                <label for="epname">Patient Name</label>
+                <input type="text" id="epname">
+            </div>
+            <div class="form-row">
+                <label for="epgen">Gender</label>
+                <input id="epgen" type="text">
+            </div>
+            <div class="form-row">
+                <label for="epcity">City</label>
+                <input type="text" id="epcity">
+            </div>
+            <div class="form-row">
+                <label for="epage">Patient Age</label>
+                <input id="epage" type="text">
+            </div>
+            
+            <div class="form-row">
+                <label for="epweight">Weight</label>
+                <input type="text" id="epweight">
+            </div>
+            <div class="form-row">
+                <label for="epheight">Height</label>
+                <input type="text" id="epheight">
+            </div>
+            <button type="submit" id="edit-sub">Submit</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

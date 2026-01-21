@@ -1,13 +1,19 @@
 from fastapi import FastAPI, HTTPException, Path, Query
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, Field, computed_field
+from pydantic import BaseModel, Field, computed_field, field_validator
 from typing import Annotated, Literal, Optional
 import json
+from fastapi.middleware.cors import CORSMiddleware
+import re
 
 
+
+
+
+#pydantic models
 class Patient(BaseModel):
     id : Annotated[str, Field(..., title="Patient ID", description="Unique ID of the Patient")]
-    name : Annotated[str, Field(..., title="Patient Name", description="Name of the patient under 30 chars", max_length=30)]
+    name : Annotated[str, Field(..., title="Patient Name", description="Name of the patient under 30 chars", max_length=30, )]
     city : Annotated[str, Field(..., description="Where the patient lives")]
     age : Annotated[int, Field(..., description="Age of the patient must be between 0 and 120", gt=0, lt=120)]
     gender : Annotated[Literal['male', 'female','other'], Field(..., description="Select Gender from [male, female, other]")]
@@ -30,6 +36,20 @@ class Patient(BaseModel):
             return "Overweight"
         else:
             return "Obese"
+        
+    @field_validator("name")
+    @classmethod
+    def validate_name(cls, v: str):
+        if not v.strip():
+            raise ValueError("Name cannot be empty")
+
+        if v.isdigit():
+            raise ValueError("Name cannot be numbers")
+
+        if not re.match(r"^[A-Za-z ]+$", v):
+            raise ValueError("Name must contain only letters and spaces")
+
+        return v
 
 class PatientUpdated(BaseModel):
     name : Annotated[Optional[str], Field(default=None, title="Patient Name", description="Name of the patient under 30 chars", max_length=30)]
@@ -39,7 +59,15 @@ class PatientUpdated(BaseModel):
     height : Annotated[Optional[float], Field(default=None, description="Height of the patient must be greater than 0", gt=0)]
     weight : Annotated[Optional[float], Field(default=None, description="Weight of the patients must be greater than 0", gt=0)]
 
+#app
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],     # allow all origins (dev only)
+    allow_methods=["*"],     # GET, POST, PUT, DELETE
+    allow_headers=["*"],
+)
 
 def load_data():
     with open("patients.json", "r") as f:
